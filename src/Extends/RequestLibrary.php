@@ -6,6 +6,9 @@ use GuzzleHttp\Client;
 
 class RequestLibrary
 {
+    const TYPE_JSON = 1;
+    const TYPE_BUILD_QUERY = 2;
+
     /**
      * GET 请求
      * @param string $url
@@ -35,17 +38,31 @@ class RequestLibrary
      * @return array
      */
     public static function requestPostResultJsonData(string $reqUrl, array $requestParams = [], array $header = ['Content-Type' => 'application/json; charset=UTF-8',
-        'Accept' => 'application/json']): array
+        'Accept' => 'application/json'],                    $type = RequestLibrary::TYPE_JSON): array
     {
-        $jsonItem = json_encode($requestParams);
+        $body = static::getBody($requestParams, $type);
         $client = new Client();
         $promise = $client->requestAsync('POST', $reqUrl, [
-            'body' => $jsonItem,
+            'body' => $body,
             'headers' => $header
         ]);
         $response = $promise->wait();
         $response = $response->getBody()->getContents();
         $result = json_decode($response, true);
         return $result;
+    }
+
+    private static function getBody($params = [], $type)
+    {
+        $body = '';
+        switch ($type) {
+            case RequestLibrary::TYPE_JSON:
+                $body = json_encode($params);
+                break;
+            case RequestLibrary::TYPE_BUILD_QUERY:
+                $body = http_build_query($params);
+                break;
+        }
+        return $body;
     }
 }
