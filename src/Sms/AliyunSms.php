@@ -14,7 +14,7 @@ class AliyunSms
     const POST_RUL = 'https://dfsns.market.alicloudapi.com/data/send_sms';//阿里code
     const REDIS_KEY_SEND_PHONE = 'sms:send:phone:mobile_%s';  //redis缓存KEY
 
-    /**
+    /*
      * 发送短信
      * @param $mobile
      * @param $code
