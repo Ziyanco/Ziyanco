@@ -52,6 +52,26 @@ if (!function_exists('successRsa')) {
         return $data;
     }
 }
+
+if (!function_exists('responseSuccess')) {
+    function responseSuccess($data = [], int $code = 200, $message = '')
+    {
+        $content = ['code' => $code];
+        $message ? $content['message'] = $message : $content['message'] = \App\Constants\UsCode::getMessage($code);
+        $data || $data === 0 ? $content['data'] = $data : $content['data'] = [];
+        return $content;
+    }
+}
+
+if (!function_exists('responseError')) {
+    function responseError($message = '', int $code = 500, $data = [])
+    {
+        $content = ['code' => $code];
+        $message ? $content['message'] = $message : $content['message'] = \App\Constants\UsCode::getMessage($code);
+        $data ? $content['data'] = $data : $content['data'] = [];
+        return $content;
+    }
+}
 /**
  * 注入日志类
  */
