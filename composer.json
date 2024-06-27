@@ -6,7 +6,10 @@
     "autoload": {
         "psr-4": {
             "Ziyanco\\Library\\": "src/"
-        }
+        },
+        "files": [
+            "./src/Extends/functions.php"
+        ]
     },
     "authors": [
         {
