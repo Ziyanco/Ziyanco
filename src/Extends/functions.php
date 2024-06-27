@@ -134,7 +134,28 @@ if (!function_exists('ziyancoPublicKey')) {
         return $key;
     }
 }
-
+if (!function_exists('makeRedisKeyByMethod')) {
+    function makeRedisKeyByMethod($params = [], $model = '', $method = '')
+    {
+        $str = arrayToJoinString($params);
+        $redisKey = Hyperf\Support\env('APP_NAME', 'prefix') . ':' . $model . ':' . $method . ':' . $str;
+        return $redisKey;
+    }
+}
+if (!function_exists('arrayToJoinString')) {
+    function arrayToJoinString($params = [], $join = '_')
+    {
+        $str = '';
+        foreach ($params as $key => $value) {
+            if (is_array($value)) {
+                $str .= $key . $join . json_encode($value, true);
+            } else {
+                $str .= $key . $join . $value;
+            }
+        }
+        return $str;
+    }
+}
 
 if (!function_exists('getZiyancoRsaKey')) {
     /**
