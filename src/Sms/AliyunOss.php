@@ -1,6 +1,6 @@
 <?php
 
-namespace Ziyan\Ziyanco\Sms;
+namespace Ziyanco\Library\Sms;
 
 class AliyunOss
 {

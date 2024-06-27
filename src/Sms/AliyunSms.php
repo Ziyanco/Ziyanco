@@ -1,6 +1,6 @@
 <?php
 
-namespace Ziyan\Ziyanco\Sms;
+namespace Ziyanco\Library\Sms;
 
 use Ziyan\Ziyanco\Extends\RequestLibrary;
 use Ziyanco\Library\Tool\RedisOptions;
