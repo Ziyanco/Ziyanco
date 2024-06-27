@@ -13,7 +13,7 @@ class CacheOption
      * @param $key
      * @param $seconds
      * @param Closure $func
-     * @return void
+     * @return null|mixed
      */
     public static function remember($key, $ttl, Closure $callback)
     {
@@ -32,7 +32,7 @@ class CacheOption
      * 永久缓存
      * @param $key
      * @param Closure $func
-     * @return void
+     * @return null|mixed
      */
     public static function rememberForever($key, Closure $callback)
     {
@@ -53,7 +53,7 @@ class CacheOption
      * @param $redisKey
      * @param Closure $func
      * @param $field
-     * @return void
+     * @return null|mixed
      */
     public static function rememberHashMap($key, Closure $callback, $fields = [])
     {
@@ -165,7 +165,7 @@ class CacheOption
      * @param $key
      * @return void
      */
-    private static function forgetRedis($key)
+    public static function forgetRedis($key)
     {
         return RedisOptions::del($key);
     }
