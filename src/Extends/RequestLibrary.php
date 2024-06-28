@@ -18,16 +18,25 @@ class RequestLibrary
      */
     public static function requestGetResultJsonData(string $reqUrl, array $requestParams = [], array $header = []): array
     {
-        $client = new Client();
-        $url = $reqUrl . "?" . http_build_query($requestParams);
-        $promise = $client->requestAsync('GET', $url,
-            [
-                'headers' => $header
-            ]);
-        $response = $promise->wait();
-        $response = $response->getBody()->getContents();
-        $res = json_decode($response, true);
-        return $res;
+        try {
+            $client = new Client();
+            $url = $reqUrl . "?" . http_build_query($requestParams);
+            $promise = $client->requestAsync('GET', $url,
+                [
+                    'headers' => $header
+                ]);
+            $response = $promise->wait();
+            $response = $response->getBody()->getContents();
+            $res = json_decode($response, true);
+            return $res;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse()->getBody()->getContents();
+            if (!empty($body)) {
+                $result = json_decode($response, true);
+                return $result;
+            }
+            throw $e;
+        }
     }
 
     /**
@@ -40,19 +49,28 @@ class RequestLibrary
     public static function requestPostResultJsonData(string $reqUrl, array $requestParams = [], array $header = ['Content-Type' => 'application/json; charset=UTF-8',
         'Accept' => 'application/json'],                    $type = RequestLibrary::TYPE_JSON): array
     {
-        $body = static::getBody($requestParams, $type);
-        $client = new Client();
-        $promise = $client->requestAsync('POST', $reqUrl, [
-            'body' => $body,
-            'headers' => $header
-        ]);
-        $response = $promise->wait();
-        $response = $response->getBody()->getContents();
-        $result = json_decode($response, true);
-        return $result;
+        try {
+            $body = static::getBody($requestParams, $type);;
+            $client = new Client();
+            $promise = $client->requestAsync('POST', $reqUrl, [
+                'body' => $body,
+                'headers' => $header
+            ]);
+            $response = $promise->wait();
+            $response = $response->getBody()->getContents();
+            $result = json_decode($response, true);
+            return $result;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse()->getBody()->getContents();
+            if (!empty($body)) {
+                $result = json_decode($response, true);
+                return $result;
+            }
+            throw $e;
+        }
     }
 
-    private static function getBody($params = [], $type)
+    private static function getBody($params, $type = RequestLibrary::TYPE_JSON)
     {
         $body = '';
         switch ($type) {

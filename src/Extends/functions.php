@@ -135,16 +135,20 @@ if (!function_exists('ziyancoPublicKey')) {
     }
 }
 if (!function_exists('makeRedisKeyByMethod')) {
-    function makeRedisKeyByMethod($params = [], $model = '', $method = '')
+    function makeRedisKeyByMethod($params, $model = '', $method = __METHOD__)
     {
+        echo 'xxxx======>>' . $model;
         $str = arrayToJoinString($params);
         $redisKey = Hyperf\Support\env('APP_NAME', 'prefix') . ':' . $model . ':' . $method . ':' . $str;
         return $redisKey;
     }
 }
 if (!function_exists('arrayToJoinString')) {
-    function arrayToJoinString($params = [], $join = '_')
+    function arrayToJoinString($params, $join = '_')
     {
+        if (!is_array($params)) {
+            return $params;
+        }
         $str = '';
         foreach ($params as $key => $value) {
             if (is_array($value)) {

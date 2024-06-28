@@ -4,7 +4,11 @@ namespace Ziyanco\Library\Sms;
 
 class AliyunOss
 {
-     public  static function getAliyunOss(){
+    /**
+     * 获取oss
+     * @return void
+     */
+    public  static function getOSSRaw(){
 
-     }
+    }
 }

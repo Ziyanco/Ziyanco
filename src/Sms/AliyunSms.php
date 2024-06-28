@@ -2,12 +2,12 @@
 
 namespace Ziyanco\Library\Sms;
 
-use Ziyan\Ziyanco\Extends\RequestLibrary;
+use Ziyanco\Library\Extends\RequestLibrary;
 use Ziyanco\Library\Tool\RedisOptions;
 
 class AliyunSms
 {
-    const ALI_DIGIT = 4;  //短信位数
+    const ALI_DIGIT = 6;  //短信位数
     const ALI_APP_CODE = '';//阿里code
     const ALI_TEMPLATE_ID = '';//阿里code
     const ALI_REDIS_USE_TIME = 60;  //redis缓存
@@ -20,21 +20,22 @@ class AliyunSms
      * @param $code
      * @return void
      */
-    public static function sendSms($mobile, $code): bool
+    public static function sendSms($mobile): bool
     {
+        //生成数字
+        $code = rand(pow(10, (AliyunSms::ALI_DIGIT - 1)), pow(10, AliyunSms::ALI_DIGIT) - 1);
         $postData = [];
-        $code = rand(pow(10, AliyunSms::ALI_DIGIT), pow(10, AliyunSms::ALI_DIGIT) - 1);
         $postData['content'] = 'code:' . $code;
         $postData['phone_number'] = $mobile;
-        $postData['template_id'] = \Hyperf\Support\env('TEMPLATE_ID', AliyunSms::ALI_TEMPLATE_ID);
-        $res = RequestLibrary::requestPostResultJsonData(AliyunSms::POST_RUL, [
+        $postData['template_id'] = \Hyperf\Support\env('ALI_TEMPLATE_ID', AliyunSms::ALI_TEMPLATE_ID);
+        $res = RequestLibrary::requestPostResultJsonData(AliyunSms::POST_RUL, $postData, [
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => 'APPCODE ' . \Hyperf\Support\env('ALI_APP_CODE', $postData, AliyunSms::ALI_APP_CODE)
         ], RequestLibrary::TYPE_BUILD_QUERY);
         if (strtolower($res['status']) == 'ok') {
             RedisOptions::set(sprintf(AliyunSms::REDIS_KEY_SEND_PHONE, $mobile), $code, \Hyperf\Support\env('ALI_REDIS_USE_TIME', AliyunSms::ALI_REDIS_USE_TIME));
         } else {
-            throw new \ErrorException('短信发送失败!');
+            throw new \ErrorException($res['reason']);
         }
         return true;
     }
