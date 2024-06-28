@@ -1,6 +1,6 @@
 <?php
 
-namespace Ziyanco\Library\Tool;
+namespace Ziyanco\Library\Trial;
 /**
  * 极验
  */
