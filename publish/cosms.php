@@ -1,4 +1,5 @@
 <?php
+use function Hyperf\Support\env;
 return [
     'default' => 'ali',
     'sms' => [
