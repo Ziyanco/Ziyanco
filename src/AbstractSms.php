@@ -4,6 +4,7 @@ namespace Ziyanco\Library;
 
 use Hyperf\Contract\ConfigInterface;
 use Psr\Container\ContainerInterface;
+use Ziyanco\Library\Tool\RedisOptions;
 
 abstract class AbstractSms implements SmsInterface
 {
@@ -15,22 +16,23 @@ abstract class AbstractSms implements SmsInterface
      * sms配置前缀
      * @var string
      */
-    private $configPrefix = 'cosms';
+    private static $configPrefix = 'cosms';
+    const REDIS_SMS_CONFIG_DEFAULT = 'sms:config:sms_default';  //redis缓存KEY
 
-    public function __construct(ContainerInterface $container)
+    public static function sendSmsCode($mobile): bool
     {
-        echo 'aa------1----------->>' . PHP_EOL;
-        $this->container = $container;
-        $this->config = $this->container->get(ConfigInterface::class);
-        $config = $this->config->get($this->configPrefix);
-        print_r($config);
-
+        $container = di(ConfigInterface::class);
+        $config = $container->get(static::$configPrefix);
+        $default = $config['sms_default']; //发送渠道
+        $smsDefault = RedisOptions::get(static::REDIS_SMS_CONFIG_DEFAULT);
+        if (!empty($smsDefault)) {
+            $default = $smsDefault;
+        }
+        $driverClass = $config['sms'][$default]['driver'];
+        $class = di($driverClass);
+        $res=$class::sendSms($mobile);
+        return $res;
     }
 
-    public static function sendSmsCode($params): bool
-    {
-        echo 'aa------2----------->>' . PHP_EOL;
-        return true;
-    }
 
 }
