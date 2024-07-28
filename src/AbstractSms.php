@@ -34,5 +34,19 @@ abstract class AbstractSms implements SmsInterface
         return $res;
     }
 
+    public static function checkSms($mobile, $code): bool{
+        $container = di(ConfigInterface::class);
+        $config = $container->get(static::$configPrefix);
+        $default = $config['sms_default']; //发送渠道
+        $smsDefault = RedisOptions::get(static::REDIS_SMS_CONFIG_DEFAULT);
+        if (!empty($smsDefault)) {
+            $default = $smsDefault;
+        }
+        $driverClass = $config['sms'][$default]['driver'];
+        $class = di($driverClass);
+        $res=$class::checkSms($mobile);
+        return $res;
+    }
+
 
 }
