@@ -1,11 +1,11 @@
 <?php
-namespace App\Lib\Alipay\V2\Aop\Schema;
-use App\Lib\Alipay\V2\Aop\XMLAttribute;
+namespace App\Pay\Alipay\V2\Aop\Schema;
+use App\Pay\Alipay\V2\Aop\XMLAttribute;
 //require_once 'XMLAttribute.php';
 //require_once 'AttributeRule.php';
-use App\Lib\Alipay\V2\Aop\AttributeRule;
+use App\Pay\Alipay\V2\Aop\AttributeRule;
 //require_once 'Option.php';
-use App\Lib\Alipay\V2\Aop\Option;
+use App\Pay\Alipay\V2\Aop\Option;
 class ServiceSchemaFactory
 {
     public static function createAttribute($id = null, $name = null, $type = null, $valueType = null)

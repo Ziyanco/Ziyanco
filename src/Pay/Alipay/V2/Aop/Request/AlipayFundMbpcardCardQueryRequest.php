@@ -1,4 +1,4 @@
-<?php  namespace App\Lib\Alipay\V2\Aop\Request;
+<?php  namespace App\Pay\Alipay\V2\Aop\Request;
 /**
  * ALIPAY API: alipay.fund.mbpcard.card.query request
  *
