@@ -13,3 +13,4 @@ runtime/
 *.cache
 .vscode/
 composer.lock
+/vendor

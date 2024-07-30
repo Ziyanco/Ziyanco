@@ -19,6 +19,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=8.1",
+        "wechatpay/wechatpay": "^1.4",
         "hyperf/framework": "~3.1.0",
         "hyperf/redis": "~3.1.0",
         "hyperf/guzzle": "^3.1"
