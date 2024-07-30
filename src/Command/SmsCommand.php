@@ -28,22 +28,13 @@ class SmsCommand extends HyperfCommand
 
     public function handle(): void
     {
-        echo 'aa======>>'.PHP_EOL;
         // 从 $input 获取 config 参数
         $argument = $this->input->getOption('config');
         if ($argument) {
-            echo '2222'.PHP_EOL;
             $this->copySource(__DIR__ . '/../../publish/cosms.php', BASE_PATH . '/config/autoload/cosms.php');
             $this->line('The sms configuration file has been generated', 'info');
         }
     }
-
-    //    protected function getArguments()
-    //    {
-    //        return [
-    //            ['name', InputArgument::OPTIONAL, 'Publish the configuration for jwt-auth']
-    //        ];
-    //    }
 
     protected function getOptions()
     {
