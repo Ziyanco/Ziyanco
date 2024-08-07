@@ -50,7 +50,7 @@ class AliyunSms
     {
         $redisKey = sprintf(AliyunSms::REDIS_KEY_SEND_PHONE, $mobile);
         $phoneCode = RedisOptions::get($redisKey);
-        if ($phoneCode !== $code) {
+        if ((string)$phoneCode !== (string)$code) {
             return false;
         }
         return true;
