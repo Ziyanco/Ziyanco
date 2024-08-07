@@ -47,9 +47,9 @@ class HuaweiSms
                 ],
                 'verify' => false
             ]);
-            $resData=json_decode($response->getBody()->getContents(), true);
+            $resData = json_decode($response->getBody()->getContents(), true);
 
-            if ($resData['code'] != '000000' || $resData['description'] != 'Success'){
+            if ($resData['code'] != '000000' || $resData['description'] != 'Success') {
                 throw new \ErrorException('短信发送失败');
             }
             RedisOptions::set(sprintf(HuaweiSms::REDIS_KEY_SEND_PHONE, $mobile), $code, $aliRedisUseTime);
@@ -64,7 +64,7 @@ class HuaweiSms
     {
         $redisKey = sprintf(HuaWeiSms::REDIS_KEY_SEND_PHONE, $mobile);
         $phoneCode = RedisOptions::get($redisKey);
-        if ( (String)$code!=(String)$phoneCode ) {
+        if ((string)$code != (string)$phoneCode) {
             return false;
         }
         return true;
