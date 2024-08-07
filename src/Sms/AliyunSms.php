@@ -46,7 +46,7 @@ class AliyunSms
      * @param $code
      * @return void
      */
-    public function checkSms($mobile, $code): bool
+    public static function checkSms($mobile, $code): bool
     {
         $redisKey = sprintf(AliyunSms::REDIS_KEY_SEND_PHONE, $mobile);
         $phoneCode = RedisOptions::get($redisKey);

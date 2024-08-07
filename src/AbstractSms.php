@@ -19,6 +19,10 @@ abstract class AbstractSms implements SmsInterface
     private static $configPrefix = 'cosms';
     const REDIS_SMS_CONFIG_DEFAULT = 'sms:config:sms_default';  //redis缓存KEY
 
+    /**
+     * @param $mobile
+     * @return bool
+     */
     public static function sendSmsCode($mobile): bool
     {
         $container = di(ConfigInterface::class);
@@ -34,6 +38,11 @@ abstract class AbstractSms implements SmsInterface
         return $res;
     }
 
+    /**
+     * @param $mobile
+     * @param $code
+     * @return bool
+     */
     public static function checkSms($mobile, $code): bool{
         $container = di(ConfigInterface::class);
         $config = $container->get(static::$configPrefix);
@@ -44,7 +53,7 @@ abstract class AbstractSms implements SmsInterface
         }
         $driverClass = $config['sms'][$default]['driver'];
         $class = di($driverClass);
-        $res=$class::checkSms($mobile);
+        $res=$class::checkSms($mobile,$code);
         return $res;
     }
 
