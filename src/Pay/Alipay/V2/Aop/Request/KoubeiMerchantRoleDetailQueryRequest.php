@@ -1,4 +1,4 @@
-<?php  namespace App\Pay\Alipay\V2\Aop\Request;
+<?php  namespace Ziyanco\Library\Pay\Alipay\V2\Aop\Request;
 /**
  * ALIPAY API: koubei.merchant.role.detail.query request
  *

@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Pay\Alipay\V2\Aop;
+namespace Ziyanco\Library\Pay\Alipay\V2\Aop;
 
 
 //require_once 'AopEncrypt.php';
 //require_once 'AopCertification.php';
-use \App\Pay\Alipay\V2\Aop\EncryptParseItem;
+use \Ziyanco\Library\Pay\Alipay\V2\Aop\EncryptParseItem;
 
 //require_once 'EncryptParseItem.php';
 
-use \App\Pay\Alipay\V2\Aop\SignData;
+use \Ziyanco\Library\Pay\Alipay\V2\Aop\SignData;
 
 //require_once 'EncryptResponseData.php';
 //require_once 'SignData.php';
 
 class AopCertClient
 {
-    use \App\Pay\Alipay\V2\Aop\AopEncrypt;
-    use \App\Pay\Alipay\V2\Aop\AopCertification;
+    use \Ziyanco\Library\Pay\Alipay\V2\Aop\AopEncrypt;
+    use \Ziyanco\Library\Pay\Alipay\V2\Aop\AopCertification;
 
     public $realContent;
 

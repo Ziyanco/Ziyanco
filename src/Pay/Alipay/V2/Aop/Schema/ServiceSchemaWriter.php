@@ -1,5 +1,5 @@
 <?php
-namespace App\Pay\Alipay\V2\Aop\Schema;
+namespace Ziyanco\Library\Pay\Alipay\V2\Aop\Schema;
 class ServiceSchemaWriter
 {
     /**

@@ -1,5 +1,5 @@
 <?php
-namespace App\Pay\Alipay\V2\Aop;
+namespace Ziyanco\Library\Pay\Alipay\V2\Aop;
 /**
  *   加密工具类
  *

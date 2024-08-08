@@ -1,4 +1,4 @@
-<?php  namespace App\Pay\Alipay\V2\Aop\Request;
+<?php  namespace Ziyanco\Library\Pay\Alipay\V2\Aop\Request;
 /**
  * ALIPAY API: alipay.user.dtbankcust.activityorder.query request
  *

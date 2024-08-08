@@ -1,4 +1,4 @@
-<?php  namespace App\Pay\Alipay\V2\Aop\Request;
+<?php  namespace Ziyanco\Library\Pay\Alipay\V2\Aop\Request;
 /**
  * ALIPAY API: alipay.fincore.compliance.rcservsmart.customizerule.delete request
  *

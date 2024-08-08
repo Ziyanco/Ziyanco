@@ -6,7 +6,7 @@
  * Date: 16/3/30
  * Time: 下午8:55
  */
-namespace App\Pay\Alipay\V2\Aop;
+namespace Ziyanco\Library\Pay\Alipay\V2\Aop;
 class EncryptParseItem
 {
     public $startIndex;

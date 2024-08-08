@@ -1,4 +1,4 @@
-namespace App\Pay\Alipay\V2\Aop\Request;
+namespace Ziyanco\Library\Pay\Alipay\V2\Aop\Request;
 /**
  * ALIPAY API: anttech.oceanbase.usercenter.baseinfo.query request
  *

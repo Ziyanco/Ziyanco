@@ -5,8 +5,8 @@
  * @author yikai.hu
  * @version $Id: AlipayMobilePublicMultiMediaClient.php, v 0.1 Aug 15, 2014 10:19:01 AM yikai.hu Exp $
  */
-namespace App\Pay\Alipay\V2\Aop;
-use  \App\Pay\Alipay\V2\Aop\AlipayMobilePublicMultiMediaExecute;
+namespace Ziyanco\Library\Pay\Alipay\V2\Aop;
+use  \Ziyanco\Library\Pay\Alipay\V2\Aop\AlipayMobilePublicMultiMediaExecute;
 
 
 class  AlipayMobilePublicMultiMediaClient

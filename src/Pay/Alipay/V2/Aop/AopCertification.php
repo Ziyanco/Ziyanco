@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Pay\Alipay\V2\Aop;
+namespace Ziyanco\Library\Pay\Alipay\V2\Aop;
 trait AopCertification
 {
 

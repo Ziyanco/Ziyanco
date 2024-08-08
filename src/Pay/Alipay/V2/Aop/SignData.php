@@ -5,7 +5,7 @@
  * Date: 15/5/2
  * Time: 下午6:21
  */
-namespace App\Pay\Alipay\V2\Aop;
+namespace Ziyanco\Library\Pay\Alipay\V2\Aop;
 class SignData
 {
     public $signSourceData = null;
