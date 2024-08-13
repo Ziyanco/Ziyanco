@@ -2,7 +2,9 @@
 
 namespace Ziyanco\Library\Pay;
 use WeChatPay\Builder;
+use WeChatPay\Crypto\AesGcm;
 use WeChatPay\Crypto\Rsa;
+use WeChatPay\Formatter;
 use WeChatPay\Util\PemUtil;
 class WxPayClient
 {
@@ -149,11 +151,45 @@ class WxPayClient
         openssl_pkey_get_public($publicKeyString);
         return $publicKeyString;
     }
-    public static function pay($object,$setting,$type='h5'){
+    //---------------------回调解密------------------------
+    public function decryptParamsNotice($setting, $params)
+    {
+        $inWechatpaySignature = $params['headers']['wechatpay_signature'];// 请根据实际情况获取
+        $inWechatpayTimestamp = $params['headers']['wechatpay_timestamp'];// 请根据实际情况获取
+        $inWechatpaySerial = $params['headers']['wechatpay_serial'];// 请根据实际情况获取
+        $inWechatpayNonce = $params['headers']['wechatpay_nonce'];// 请根据实际情况获取
+        $inBody = $params['body'];// 在商户平台上设置的APIv3密钥
+        $apiv3Key = $setting['api_key'];// 在商户平台上设置的APIv3密钥
+// 根据通知的平台证书序列号，查询本地平台证书文件，
+// 假定为 `/path/to/wechatpay/inWechatpaySerial.pem`
+        $platformCertificateFilePath = $this->getStringToPublicKey($setting['apiclient_cert']); //公钥
+        $platformPublicKeyInstance = Rsa::from($platformCertificateFilePath, Rsa::KEY_TYPE_PUBLIC);
+        //$platformPublicKeyInstance = Rsa::from('file:///Users/weiwei/workspace/hyperf/wsport/api/app/Logic/Shop/Pay/wechatpay.pem', Rsa::KEY_TYPE_PUBLIC);
 
-    }
-
-    public static function sign($object,$setting,$type='h5'){
-
+// 检查通知时间偏移量，允许5分钟之内的偏移
+        $timeOffsetStatus = 300 >= abs(Formatter::timestamp() - (int)$inWechatpayTimestamp);
+        $verifiedStatus = Rsa::verify(
+        // 构造验签名串
+            Formatter::joinedByLineFeed($inWechatpayTimestamp, $inWechatpayNonce, $inBody),
+            $inWechatpaySignature,
+            $platformPublicKeyInstance
+        );
+        $timeOffsetStatus = 1;
+        if ($timeOffsetStatus && $verifiedStatus) {
+            // 转换通知的JSON文本消息为PHP Array数组
+            $inBodyArray = (array)json_decode($inBody, true);
+            // 使用PHP7的数据解构语法，从Array中解构并赋值变量
+            ['resource' => [
+                'ciphertext' => $ciphertext,
+                'nonce' => $nonce,
+                'associated_data' => $aad
+            ]] = $inBodyArray;
+            // 加密文本消息解密
+            $inBodyResource = AesGcm::decrypt($ciphertext, $apiv3Key, $nonce, $aad);
+            // 把解密后的文本转换为PHP Array数组
+            $inBodyResourceArray = (array)json_decode($inBodyResource, true);
+            return $inBodyResourceArray;
+        }
+        return [];
     }
 }

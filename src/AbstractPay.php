@@ -2,12 +2,11 @@
 
 namespace Ziyanco\Library;
 
-use Hyperf\Contract\ConfigInterface;
-use Ziyanco\Library\Tool\RedisOptions;
 use stdClass;
+
 abstract class AbstractPay
 {
-    const  MULTIPLIER_MONEY=100;
+    const  MULTIPLIER_MONEY = 100;
 
     public static function usSelectPay($record, $setting, $type)
     {
@@ -109,9 +108,27 @@ abstract class AbstractPay
     }
 
 
-    public static function usSign($object, $setting, $type)
+    public static function checkParamsSign($object, $setting, $type)
     {
-
+        switch ($type) {
+            case 80001:  //支付宝回调
+                $class = di()->get(\Ziyanco\Library\Pay\AliPayClient::class);
+                $res = $class->checkSign($setting, $object);
+                break;
+            case 80002:  //微信回调
+                $class = di()->get(\Ziyanco\Library\Pay\WxPayClient::class);
+                $res = $class->decryptParamsNotice($setting, $object);
+                break;
+            case 80003:
+                break;
+            case 80004:
+                break;
+            case 80005: //IOS回调
+                $class = di()->get(\Ziyanco\Library\Pay\IosClient::class);
+                $res = $class->iosSignCheck($setting, $object);
+                break;
+        }
+        return $res;
     }
 
 

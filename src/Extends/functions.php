@@ -24,6 +24,18 @@ if (!function_exists('di')) {
         return $container;
     }
 }
+if (!function_exists('container')) {
+
+    /**
+     * 获取容器实例
+     * @return \Psr\Container\ContainerInterface
+     */
+    function container(): \Psr\Container\ContainerInterface
+    {
+        return ApplicationContext::getContainer();
+    }
+
+}
 /**
  * 返回的数据进行加密
  */
