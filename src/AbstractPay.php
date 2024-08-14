@@ -125,7 +125,7 @@ abstract class AbstractPay
                 break;
             case 80005: //IOS回调
                 $class = di()->get(\Ziyanco\Library\Pay\IosClient::class);
-                $res = $class->iosSignCheck($setting, $object);
+                $res = $class->iosSignCheck($object);
                 break;
         }
         return $res;

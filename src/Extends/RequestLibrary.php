@@ -9,6 +9,8 @@ class RequestLibrary
     const TYPE_JSON = 1;
     const TYPE_BUILD_QUERY = 2;
 
+    const TYPE_FORM_PARAMS = 3;
+
     /**
      * GET 请求
      * @param string $url
@@ -52,19 +54,27 @@ class RequestLibrary
         try {
             $body = static::getBody($requestParams, $type);;
             $client = new Client();
-            $promise = $client->requestAsync('POST', $reqUrl, [
-                'body' => $body,
-                'headers' => $header
-            ]);
+            if ($header['Content-Type'] == 'application/json; charset=UTF-8') {
+                $promise = $client->requestAsync('POST', $reqUrl, [
+                    'body' => $body,
+                    'headers' => $header
+                ]);
+            } elseif ($header['Content-Type'] == 'application/x-www-form-urlencoded') {
+                $promise = $client->requestAsync('POST', $reqUrl, [
+                    'form_params' => $body,
+                    'headers' => $header
+                ]);
+            }
+
             $response = $promise->wait();
             $response = $response->getBody()->getContents();
             $result = json_decode($response, true);
-            return $result;
+            return empty($result) ? [] : $result;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse()->getBody()->getContents();
             if (!empty($body)) {
                 $result = json_decode($response, true);
-                return $result;
+                return empty($result) ? [] : $result;
             }
             throw $e;
         }
@@ -79,6 +89,9 @@ class RequestLibrary
                 break;
             case RequestLibrary::TYPE_BUILD_QUERY:
                 $body = http_build_query($params);
+                break;
+            case RequestLibrary::TYPE_FORM_PARAMS:
+                $body = $params;
                 break;
         }
         return $body;

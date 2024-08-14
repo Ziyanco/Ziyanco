@@ -1,7 +1,7 @@
 <?php
 
 namespace Ziyanco\Library\Pay;
-
+use GuzzleHttp\Client;
 class IosClient
 {
     /**
@@ -18,6 +18,7 @@ class IosClient
         $promise = $client->requestAsync('POST', $url, ['body' => $jsonItem, 'headers' => ['Content-Type' => 'application/json; charset=UTF-8']]);
         $response = $promise->wait();
         $response = $response->getBody()->getContents();
+        print_r($response);
         $result = json_decode($response, true);
         if ($result['status'] == '21007') {
             //验证失败 返回app错误状态
