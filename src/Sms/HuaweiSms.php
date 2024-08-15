@@ -8,26 +8,19 @@ class HuaweiSms
     const POST_RUL = 'https://smsapi.cn-north-4.myhuaweicloud.com:443/sms/batchSendSms/v1';//阿里code
     const REDIS_KEY_SEND_PHONE = 'sms:send:phone:mobile_%s';  //redis缓存KEY
 
-    const HWY_DIGIT = 6;
 
-    const HWY_USE_TIME = 300;
-    const HWY_APP_KEY = '2a2wf1wTH1N19LX2sgySSrWt6HP3h';
-    const HWY_APP_SECRET = 'kZ2r1N0oWFDTM7S02KeL6w4l0JMPJ';
-    const HWY_TEMPLATE_ID = '00bddf24fcb14eb7ab76a985500facfc';
-    const HWY_APP_FROM = '8824070510830';
-
-    public static function sendSms($mobile): bool
+    public static function sendSms($mobile,$config): bool
     {
 
-        $aliDigit = HuaWeiSms::HWY_DIGIT;
-        $aliRedisUseTime = HuaWeiSms::HWY_USE_TIME;
+        $aliDigit = $config['HwyDigit'];
+        $aliRedisUseTime =$config['HwyUseTime'];
         //生成数字
         $code = rand(pow(10, ($aliDigit - 1)), pow(10, $aliDigit) - 1);
-        $APP_KEY = HuaWeiSms::HWY_APP_KEY; //APP_Key
-        $APP_SECRET = HuaWeiSms::HWY_APP_SECRET; //APP_Secret
-        $sender = HuaWeiSms::HWY_APP_FROM; //国内短信签名通道号
+        $APP_KEY = $config['HwyAppKey']; //APP_Key
+        $APP_SECRET = $config['HwyAppSecret']; //APP_Secret
+        $sender = $config['HwyAppForm'];//国内短信签名通道号
         $receiver = '+86' . $mobile; //短信接收人号码
-        $TEMPLATE_ID = HuaWeiSms::HWY_TEMPLATE_ID; //模板ID
+        $TEMPLATE_ID = $config['HwyTemplateId'];//模板ID
         $TEMPLATE_PARAS = (string)$code;
         $statusCallback = '';
         $client = new Client();
