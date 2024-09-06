@@ -4,7 +4,7 @@ namespace Ziyanco\Library\Trial;
 /**
  * 极验
  */
-class GeetestWeb
+class GeetestWebTrial
 {
 
 }
