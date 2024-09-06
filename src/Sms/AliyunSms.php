@@ -20,17 +20,17 @@ class AliyunSms
      * @param $code
      * @return void
      */
-    public static function sendSms($mobile): bool
+    public static function sendSms($mobile,$config): bool
     {
         //生成数字
         $code = rand(pow(10, (AliyunSms::ALI_DIGIT - 1)), pow(10, AliyunSms::ALI_DIGIT) - 1);
         $postData = [];
         $postData['content'] = 'code:' . $code;
         $postData['phone_number'] = $mobile;
-        $postData['template_id'] = \Hyperf\Support\env('ALI_TEMPLATE_ID', AliyunSms::ALI_TEMPLATE_ID);
+        $postData['template_id'] = $config['ALI_TEMPLATE_ID'];
         $res = RequestLibrary::requestPostResultJsonData(AliyunSms::POST_RUL, $postData, [
             'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'APPCODE ' . \Hyperf\Support\env('ALI_APP_CODE', $postData, AliyunSms::ALI_APP_CODE)
+            'Authorization' => 'APPCODE ' . $config['ALI_APP_CODE']
         ], RequestLibrary::TYPE_BUILD_QUERY);
         if (strtolower($res['status']) == 'ok') {
             RedisOptions::set(sprintf(AliyunSms::REDIS_KEY_SEND_PHONE, $mobile), $code, \Hyperf\Support\env('ALI_REDIS_USE_TIME', AliyunSms::ALI_REDIS_USE_TIME));

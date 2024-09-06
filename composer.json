@@ -22,7 +22,11 @@
         "wechatpay/wechatpay": "^1.4",
         "hyperf/framework": "~3.1.0",
         "hyperf/redis": "~3.1.0",
-        "hyperf/guzzle": "^3.1"
+        "hyperf/guzzle": "^3.1",
+        "yurunsoft/phpmailer-swoole": "^1.0"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "^5.0"
     },
     "extra": {
         "hyperf": {
