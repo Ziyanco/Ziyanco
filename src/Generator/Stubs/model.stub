@@ -1,0 +1,36 @@
+<?php
+declare (strict_types=1);
+
+namespace App\Model\Table;
+
+use App\Model\Model;
+/**
+{PROPERTY_LIST}*/
+class {CLASS_NAME} extends Model
+{
+    protected ?string $dateFormat = 'U';
+    const CREATED_AT = 'create_time';
+    const UPDATED_AT = 'update_time';
+    /**
+     * The table associated with the model.
+     *
+     * @var string|null
+     */
+    protected ?string $table = '{TABLE_NAME}';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected array $fillable = [
+        {FILL_ABLE}
+    ];
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected array $casts = [{CASTS_ABLE}];
+
+
+}
