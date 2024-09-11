@@ -7,7 +7,7 @@ composer require ziyanco/library
 
 #### 1.生成短信配置
 ```bash
-php bin/hyperf.php sms:publish --config 
+php bin/hyperf.php sms:publish 
 ```
 #### 2.生成模板说明
 box_info表名(不用加前缀)
