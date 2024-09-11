@@ -10,8 +10,10 @@ composer require ziyanco/library
 php bin/hyperf.php sms:publish --config 
 ```
 #### 2.生成模板说明
-
-
+box_info表名(不用加前缀)
+```bash
+ php bin/hyperf.php model:public box_info  
+```
 
 #### 3.redis缓存操作公共方法
 
