@@ -1,5 +1,9 @@
 
 #开发工具
+#### 引入插件
+```bash
+ composer install ziyanco/library
+```
 
 #### 1.生成短信配置
 ```bash
