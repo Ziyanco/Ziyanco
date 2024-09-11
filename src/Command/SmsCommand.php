@@ -28,18 +28,13 @@ class SmsCommand extends HyperfCommand
 
     public function handle(): void
     {
-        // 从 $input 获取 config 参数
-        $argument = $this->input->getOption('config');
-        if ($argument) {
-            $this->copySource(__DIR__ . '/../../publish/cosms.php', BASE_PATH . '/config/autoload/cosms.php');
-            $this->line('The sms configuration file has been generated', 'info');
-        }
+        $this->copySource(__DIR__ . '/../../publish/cosms.php', BASE_PATH . '/config/autoload/cosms.php');
     }
 
     protected function getOptions()
     {
         return [
-            ['config', null, InputOption::VALUE_NONE, 'Publish the configuration for sms'],
+
         ];
     }
 

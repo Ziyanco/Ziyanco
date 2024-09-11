@@ -226,5 +226,15 @@ wwIDAQAB
     }
 }
 
+//字符串转驼峰
+if (!function_exists('snakeToCamel')) {
+    function snakeToCamel($str , $ucfirst = true)
+    {
+        while(($pos = strpos($str , '_'))!==false)
+            $str = substr($str , 0 , $pos).ucfirst(substr($str , $pos+1));
+        return $ucfirst ? ucfirst($str) : $str;
+    }
+}
+
 
 

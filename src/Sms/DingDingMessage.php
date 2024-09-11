@@ -15,9 +15,9 @@ class DingDingMessage
      * @param $data
      * @return void
      */
-    public static function send($message, $title = '通知:')
+    public static function send($message, $title = '【系统】')
     {
-        $data = ['msgtype' => 'markdown', 'markdown' => ['title' => $title, 'text' => $title . $message], 'isAtAll' => false];
+        $data = ['msgtype' => 'markdown', 'markdown' => ['title' => '通知:'.$title, 'text' => $title .':'. $message], 'isAtAll' => false];
         $dingPostUrl = 'https://oapi.dingtalk.com/robot/send?access_token=' . \Hyperf\Support\env('DINGDING_ACCESS_TOKEN', DingDingMessage::DINGDING_TOKEN);
         try {
             $res = RequestLibrary::requestPostResultJsonData($dingPostUrl, $data);
@@ -33,9 +33,9 @@ class DingDingMessage
      * @param $data
      * @return void
      */
-    public static function sendException($message, $title = '异常通知:')
+    public static function sendException($message, $title = '【异常】')
     {
-        $data = ['msgtype' => 'markdown', 'markdown' => ['title' => $title, 'text' => $title . $message], 'isAtAll' => false];
+        $data = ['msgtype' => 'markdown', 'markdown' => ['title' => '异常通知:'.$title, 'text' => $title . $message], 'isAtAll' => false];
         $dingPostUrl = 'https://oapi.dingtalk.com/robot/send?access_token=' . \Hyperf\Support\env('DINGDING_EXCEPTION_ACCESS_TOKEN', DingDingMessage::DINGDING_TOKEN);
         try {
             $res = RequestLibrary::requestPostResultJsonData($dingPostUrl, $data);
