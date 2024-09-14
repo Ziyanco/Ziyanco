@@ -58,7 +58,7 @@ if (!function_exists('successRsa')) {
             }
             $encodedEncryptedData = base64_encode($encrypted);
 
-            $data || $data === 0 ? $data['data'] = $encodedEncryptedData : $data['data'] = [];
+            $data || $data === 0 ? $data['data'] = $encodedEncryptedData : $data['data'] = null;
 
         }
         return $data;
@@ -70,7 +70,7 @@ if (!function_exists('responseSuccess')) {
     {
         $content = ['code' => $code];
         $message ? $content['message'] = $message : $content['message'] = \App\Constants\UsCode::getMessage($code);
-        $data || $data === 0 ? $content['data'] = $data : $content['data'] = [];
+        $data || $data === 0 ? $content['data'] = $data : $content['data'] = null;
         return $content;
     }
 }
@@ -80,7 +80,7 @@ if (!function_exists('responseError')) {
     {
         $content = ['code' => $code];
         $message ? $content['message'] = $message : $content['message'] = \App\Constants\UsCode::getMessage($code);
-        $data ? $content['data'] = $data : $content['data'] = [];
+        $data ? $content['data'] = $data : $content['data'] = null;
         return $content;
     }
 }
