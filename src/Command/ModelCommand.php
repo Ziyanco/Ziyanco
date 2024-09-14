@@ -65,7 +65,7 @@ class ModelCommand extends HyperfCommand
             '{CASTS_ABLE}'
         ],[
             $classModel,
-            $tableName,
+            $argument,
             $propertyListString,
             $fillAbleReplace,
             $castsAbleString
