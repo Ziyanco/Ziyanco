@@ -32,5 +32,37 @@ class {CLASS_NAME} extends Model
      */
     protected array $casts = [{CASTS_ABLE}];
 
+    /**
+     * 新增事件
+     * @param Created $event
+     * @return void
+     */
+    public function created(Created $event)
+    {
+        echo '-----add table:' . $this->table . '---->>' . PHP_EOL;
+        $keys[] = $this->table . ':list';
+        $keys[] = $this->table . ':page_list';
+        $this->deleteRedis($keys);
+    }
 
+    /**
+     * 更新事件
+     * @param Updated $event
+     * @return void
+     */
+    public function updated(Updated $event)
+    {
+        echo '-----update table:' . $this->table . '---->>' . PHP_EOL;
+        $key = makeRedisTableKeyByMethod($this->id, $this->table);
+        $keys[] = $key;
+        $keys[] = $this->table . ':list';
+        $keys[] = $this->table . ':page_list';
+        $this->deleteRedis($keys);
+
+    }
+
+    public function deleteRedis($keys)
+    {
+        \Ziyanco\Library\Tool\CacheOption::forgetRedis($keys);
+    }
 }
